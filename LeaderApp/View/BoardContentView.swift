@@ -3,7 +3,7 @@
 //  LeaderApp
 //
 //  Created by leaders on 2023/05/16.
-//
+//  게시판 상세내용
 
 import Foundation
 import SwiftUI
