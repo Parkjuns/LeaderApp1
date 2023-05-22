@@ -15,8 +15,11 @@ struct Layout {
 
 struct MyPage : View {
     
+    @StateObject var dailyReportVM = DailyReportVM()
+    
     
     @State var isPresented: Bool = false
+    
     let layout: [Layout] = [
         Layout(id: 0, title: "실적입력1", symbol: "tv.fill"),
         Layout(id: 1, title: "실적입력2", symbol: "tv.fill")
@@ -57,10 +60,10 @@ struct MyPage : View {
                                      .padding(.all, 10)
                              }
                            }.sheet(isPresented: $isPresented) {
-                               DailyReport()
+//                               DailyReport()
                            }
                            
-                           NavigationLink(destination: DailyReportCheck()) {
+                           NavigationLink(destination: DailyReportCheck().environmentObject(dailyReportVM)) {
                                VStack {
                                    Image(systemName: "doc.fill")
                                        .frame(width: 100, height: 50)

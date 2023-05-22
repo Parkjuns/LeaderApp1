@@ -9,8 +9,7 @@ import Foundation
 
 // MARK: - DailyReportCheckResponse
 struct DailyReportCheckResponse: Codable {
-    let teamMemberCnt, totalPrevDayNotApproval, totalTodayAllocation, totalTodayEnding: Int
-    let totalTodayNotApproval: Int
+    let teamMemberCnt, totalPrevDayNotApproval, totalTodayAllocation, totalTodayEnding, totalTodayNotApproval: Int
     let performanceList: [PerformanceList]
 
     enum CodingKeys: String, CodingKey {
@@ -24,14 +23,15 @@ struct DailyReportCheckResponse: Codable {
 }
 
 // MARK: - PerformanceList
-struct PerformanceList: Codable {
+struct PerformanceList: Codable, Identifiable {
+    var id: UUID = UUID()
     let userNo: Int
     let userName, userSerial: String
     let teamID: Int
     let teamName: String
     let work, prevDayNotApproval, todayAllocation, todayEnding: Int
     let todayNotApproval: Int
-    let approvalYn: ApprovalYn
+    let approvalYn: String
 
     enum CodingKeys: String, CodingKey {
         case userNo = "user_no"
@@ -46,8 +46,4 @@ struct PerformanceList: Codable {
         case todayNotApproval = "today_not_approval"
         case approvalYn = "approval_yn"
     }
-}
-
-enum ApprovalYn: String, Codable {
-    case n = "N"
 }

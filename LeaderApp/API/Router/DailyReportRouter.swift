@@ -20,9 +20,9 @@ enum DailyReportRouter: URLRequestConvertible {
     var endPoint: String {
         switch self {
         case .putDailyReport:
-            return "api/daily_report/performance"
+            return "daily_report/performance"
         case .getDailyReport(let report_date, let work, let team_id):
-            return "/api/daily_report/report_date/\(report_date)/work/\(work)/team/\(team_id)"
+            return "daily_report/report_date/\(report_date)/work/\(work)/team/\(team_id)"
         }
     }
     
@@ -54,11 +54,6 @@ enum DailyReportRouter: URLRequestConvertible {
     
     //최종 URLRequest
     func asURLRequest() throws -> URLRequest {
-//        let url = baseURL.appendingPathComponent(endPoint)
-//        var request = URLRequest(url: url)
-//        request.method = method
-//        request.httpBody = try JSONEncoding.default.encode(request, with: parameters).httpBody
-//        return request
         let url = baseURL.appendingPathComponent(endPoint)
         
         var request = URLRequest(url: url)
@@ -72,7 +67,10 @@ enum DailyReportRouter: URLRequestConvertible {
             request.httpBody = try JSONEncoding.default.encode(request, with: parameters).httpBody
         }
         print("request == \(request.debugDescription)")
+        print("parameters == \(parameters)")
+        print("request httpBody == \(request.httpBody)")
         
+        print("router 끝")
         return request
     }
     

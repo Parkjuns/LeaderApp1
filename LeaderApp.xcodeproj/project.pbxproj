@@ -57,6 +57,7 @@
 		EC4EE8DC2A120CA000B89A46 /* LoginApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4EE8DB2A120CA000B89A46 /* LoginApiService.swift */; };
 		EC4EE8DF2A120D7E00B89A46 /* AuthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4EE8DE2A120D7E00B89A46 /* AuthData.swift */; };
 		EC4EE8E22A120DFB00B89A46 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4EE8E12A120DFB00B89A46 /* UserDefaultManager.swift */; };
+		EC9728E52A175BA60062876C /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9728E42A175BA60062876C /* TestData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +113,7 @@
 		EC4EE8DB2A120CA000B89A46 /* LoginApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginApiService.swift; sourceTree = "<group>"; };
 		EC4EE8DE2A120D7E00B89A46 /* AuthData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthData.swift; sourceTree = "<group>"; };
 		EC4EE8E12A120DFB00B89A46 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
+		EC9728E42A175BA60062876C /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,6 +278,7 @@
 				EC24A0822A15BDBD007A7E46 /* NoticeContentMemo.swift */,
 				EC24A0962A161220007A7E46 /* MessageData.swift */,
 				EC24A0982A161F86007A7E46 /* DailyReportCheckResponse.swift */,
+				EC9728E42A175BA60062876C /* TestData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -460,6 +463,7 @@
 				EC24A0972A161220007A7E46 /* MessageData.swift in Sources */,
 				EC4EE8D42A11C27C00B89A46 /* BaseInterceptor.swift in Sources */,
 				EC24A07B2A15A96D007A7E46 /* BoardWrite.swift in Sources */,
+				EC9728E52A175BA60062876C /* TestData.swift in Sources */,
 				EC24A0992A161F86007A7E46 /* DailyReportCheckResponse.swift in Sources */,
 				EC4EE8D12A11C23E00B89A46 /* ApiClient.swift in Sources */,
 				EC24A0892A15E112007A7E46 /* DailyReport.swift in Sources */,

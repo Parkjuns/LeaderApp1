@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DailyReport : View {
     
-    @StateObject var dailyReportVM : DailyReportVM = DailyReportVM()
+    @StateObject var dailyReportVM : DailyReportVM
     
     @State var prev_day_not_approval: Int = 0 //전일미결
     @State var today_allocation: Int = 0  //당일배당
@@ -83,8 +83,6 @@ struct DailyReport : View {
                     .foregroundColor(Color.red)
                 Spacer()
                 TextField("0", value: $today_not_approval, formatter: Self.formatter)
-//                      .fixedSize()
-//                      .keyboardType(.numberPad)
                 Text("건")
                       .foregroundColor(Color.gray)
               }
@@ -107,8 +105,8 @@ struct DailyReport : View {
 
 }
 
-struct DailyReport_Previews: PreviewProvider {
-    static var previews: some View {
-        DailyReport()
-    }
-}
+//struct DailyReport_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DailyReport()
+//    }
+//}
