@@ -144,18 +144,20 @@ struct DailyReportCheck : View {
           .navigationBarTitle("팀별 일일실적 확인", displayMode: .inline)
         }
         .onAppear(perform: {dailyReportVM.getDailyReport(report_date: "2023-05-01", work: 60, team_id: 263)}) //뷰가 화면에 나타났을때 실행
-//        .onReceive(dailyReportVM.$performanceList.combineLatest(dailyReportVM.$teamMemberCnt
-//                                                                , dailyReportVM.$teamMemberCnt
-//                                                                , dailyReportVM.$totalPrevDayNotApproval
-//                                                                , dailyReportVM.$totalTodayAllocation
-//                                                                , dailyReportVM.$totalTodayEnding
-//                                                                , dailyReportVM.$totalTodayNotApproval))
-//
-//        { updatedPerformanceList, updatedTeamMemberCnt, updatedTotalPrevDayNotApprovaltalTodayAllocation, totalTodayEnding, totalTodayNotApproval in
-//            self.performanceList = updatedPerformanceList
-//            self.teamMemberCnt = updatedTeamMemberCnt
-//            self.totalTodayEnding = updatedTotalTodayEnding
-        })
+        
+//        .onReceive(dailyReportVM.$performanceList,
+//                   dailyReportVM.$teamMemberCnt,
+//                   dailyReportVM.$totalPrevDayNotApproval,
+//                   dailyReportVM.$totalTodayAllocation,
+//                   dailyReportVM.$totalTodayEnding,
+//                   dailyReportVM.$totalTodayNotApproval, perform: {
+//            self.performanceList = $0
+//            self.teamMemberCnt = $teamMemberCnt
+//            self.totalPrevDayNotApproval = $totalPrevDayNotApproval
+//            self.totalTodayAllocation = $totalTodayAllocation
+//            self.totalTodayEnding = $0
+//            self.totalTodayNotApproval = $0
+//        })
 //        .onReceive(dailyReportVM.$performanceList, perform: {
 //            self.performanceList = $0
 //            self.teamMemberCnt = dailyReportVM.teamMemberCnt
