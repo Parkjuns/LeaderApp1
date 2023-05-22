@@ -38,9 +38,9 @@ class DailyReportVM: ObservableObject {
 
         .sink { (completion: Subscribers.Completion<AFError>) in
             print("DailyReportVM completion: \(completion)")
-            
         } receiveValue: { MessageData in
-            print(MessageData)
+//            print(MessageData)
+            self.writeSuccess.send()
         }.store(in: &subscription) //메모리 정리 위해
         
         

@@ -17,7 +17,6 @@ struct MyPage : View {
     
     @StateObject var dailyReportVM = DailyReportVM()
     
-    
     @State var isPresented: Bool = false
     
     let layout: [Layout] = [
@@ -60,7 +59,7 @@ struct MyPage : View {
                                      .padding(.all, 10)
                              }
                            }.sheet(isPresented: $isPresented) {
-//                               DailyReport()
+                               DailyReport(dailyReportVM: DailyReportVM())
                            }
                            
                            NavigationLink(destination: DailyReportCheck().environmentObject(dailyReportVM)) {

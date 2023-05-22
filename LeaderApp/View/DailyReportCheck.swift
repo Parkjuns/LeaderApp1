@@ -13,6 +13,11 @@ struct DailyReportCheck : View {
     @State private var selectedDate = Date()
     @State private var showDatePicker = false
     
+    //파라미터로 전달하기위해 포맷
+    var formattedReportDate: String {
+        return DailyReport.dateformat.string(from: selectedDate)
+    }
+    
     @EnvironmentObject var dailyReportVM : DailyReportVM
     
     //데이터 가져오기
@@ -23,13 +28,11 @@ struct DailyReportCheck : View {
     @State var totalTodayEnding : Int = 0
     @State var totalTodayNotApproval : Int = 0
     
-    
     static let dateformat: DateFormatter = {
-          let formatter = DateFormatter()
-           formatter.dateFormat = "YYYY년 MM월 dd일"
-           return formatter
-       }()
-    
+      let formatter = DateFormatter()
+       formatter.dateFormat = "YYYY년 MM월 dd일"
+       return formatter
+    }()
     
     //리스트 고정헤더
     func headerView() -> some View{
@@ -37,7 +40,6 @@ struct DailyReportCheck : View {
             Text("전체 \(teamMemberCnt)건")
                 .font(.system(size: 16))
                 .foregroundColor(Color.black)
-                .bold()
             Spacer()
             VStack(alignment: .trailing){
                 HStack{
@@ -62,6 +64,8 @@ struct DailyReportCheck : View {
                 }
             }
         }
+        .background(Color.black.opacity(0.05))
+        .padding([.leading,.trailing])
     }
     
     var body: some View {
@@ -92,48 +96,65 @@ struct DailyReportCheck : View {
               ScrollView(.horizontal) {
                   HStack {
                       Text("삼성정보입력팀")
-                          .background(Color.gray)
+                          .onTapGesture {
+                              dailyReportVM.getDailyReport(report_date: "\(formattedReportDate)", work: 60, team_id: 0)
+                          }
                       Text("삼성정보입력 1팀")
-                          .background(Color.gray)
+                          .onTapGesture {
+                              dailyReportVM.getDailyReport(report_date: "\(formattedReportDate)", work: 60, team_id: 263)
+                          }
                       Text("삼성정보입력 2팀")
-                          .background(Color.gray)
+                          .onTapGesture {
+                              dailyReportVM.getDailyReport(report_date: "\(formattedReportDate)", work: 60, team_id: 264)
+                          }
                       Text("삼성정보입력 3팀")
-                          .background(Color.gray)
+                          .onTapGesture {
+                              dailyReportVM.getDailyReport(report_date: "\(formattedReportDate)", work: 60, team_id: 265)
+                          }
                   }
                   .padding([.leading, .trailing])
-                  .background(Color.yellow)
               }
               
               Section(header: headerView()){
-              }
-              List(performanceList) { aList in
-                HStack{
-                    Text("\(aList.userName)(\(aList.userSerial))")
-                        .font(.system(size: 15))
-                        .bold()
-                    Spacer()
-                    VStack(alignment: .trailing){
-                        HStack{
-                            Text("\(aList.prevDayNotApproval)")
-                                .foregroundColor(Color.red)
-                        }
-                        //                              .padding(.bottom,1) //전일미결과 배당종결미결라인 사이 패딩
-                        HStack{
-                            Text("\(aList.todayAllocation)") //당일배당
-                                .padding(.trailing,40)
-                            //                                  .font(.system(size: 15))
-                                .backgroundStyle(Color.yellow)
-                            Text("\(aList.todayEnding)") //당일종결
-                                .foregroundColor(Color.blue)
-                                .padding(.trailing,29)
-                                .backgroundStyle(Color.yellow)
-                            Text("\(aList.todayNotApproval)") //당일미결
-                                .foregroundColor(Color.red)
-                                .backgroundStyle(Color.yellow)
-                        }
-                    }
-                }
-              }.listStyle(.plain)
+                List(performanceList) { aList in
+                      HStack(spacing: 0){
+                          Text("\(aList.userName)(\(aList.userSerial))")
+                              .font(.system(size: 15))
+                              .bold()
+                          VStack(alignment: .trailing){
+                              HStack(spacing:0){
+                                  Text("\(aList.prevDayNotApproval)")
+                                      .font(.system(size: 15))
+                                      .frame(minWidth: 25, alignment: .trailing)
+                                      .foregroundColor(Color.red)
+                              }
+                              .padding(.bottom,1) //전일미결과 배당종결미결라인 사이 패딩
+                              HStack(spacing:0){
+                                  Text("\(aList.todayAllocation)") //당일배당
+                                      .font(.system(size: 13))
+                                      .frame(minWidth: 50, alignment: .trailing)
+                                  Spacer().frame(width: 10)
+                                  Text("\(aList.todayEnding)") //당일종결
+                                      .font(.system(size: 13))
+                                      .frame(minWidth: 68, alignment: .trailing)
+                                      .foregroundColor(Color.blue)
+                                  Text("\(aList.todayNotApproval)")
+                                      .font(.system(size: 13))
+                                      .frame(minWidth: 78, alignment: .trailing)
+                                      .foregroundColor(Color.red)
+                              }
+                          }
+                          .font(.system(size: 11))
+                          .frame(
+                            minWidth: 0,
+                            maxWidth: .infinity,
+                            minHeight: 0,
+                            maxHeight: .infinity,
+                            alignment: .trailing
+                          )
+                      }
+                  }
+              }.listStyle(PlainListStyle())
               Button("확인완료"){
               }
               .foregroundColor(.white)
@@ -145,23 +166,25 @@ struct DailyReportCheck : View {
         }
         .onAppear(perform: {dailyReportVM.getDailyReport(report_date: "2023-05-01", work: 60, team_id: 263)}) //뷰가 화면에 나타났을때 실행
         
-//        .onReceive(dailyReportVM.$performanceList,
-//                   dailyReportVM.$teamMemberCnt,
-//                   dailyReportVM.$totalPrevDayNotApproval,
-//                   dailyReportVM.$totalTodayAllocation,
-//                   dailyReportVM.$totalTodayEnding,
-//                   dailyReportVM.$totalTodayNotApproval, perform: {
-//            self.performanceList = $0
-//            self.teamMemberCnt = $teamMemberCnt
-//            self.totalPrevDayNotApproval = $totalPrevDayNotApproval
-//            self.totalTodayAllocation = $totalTodayAllocation
-//            self.totalTodayEnding = $0
-//            self.totalTodayNotApproval = $0
-//        })
-//        .onReceive(dailyReportVM.$performanceList, perform: {
-//            self.performanceList = $0
-//            self.teamMemberCnt = dailyReportVM.teamMemberCnt
-//        }) //데이터를 수신할 때 실행. 앱의 상태변화나 외부이벤트의 응답으로 뷰를 업데이트 가능.
+        //줄이기
+        .onReceive(dailyReportVM.$performanceList, perform: {
+            self.performanceList = $0
+        })
+        .onReceive(dailyReportVM.$teamMemberCnt, perform: {
+            self.teamMemberCnt = $0
+        })
+        .onReceive(dailyReportVM.$totalPrevDayNotApproval, perform: {
+            self.totalPrevDayNotApproval = $0
+        })
+        .onReceive(dailyReportVM.$totalTodayAllocation, perform: {
+            self.totalTodayAllocation = $0
+        })
+        .onReceive(dailyReportVM.$totalTodayEnding, perform: {
+            self.totalTodayEnding = $0
+        })
+        .onReceive(dailyReportVM.$totalTodayNotApproval, perform: {
+            self.totalTodayNotApproval = $0
+        })
     }//body
 }
 
