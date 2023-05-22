@@ -15,7 +15,7 @@ struct DailyReportCheck : View {
     
     //파라미터로 전달하기위해 포맷
     var formattedReportDate: String {
-        return DailyReport.dateformat.string(from: selectedDate)
+        return DailyReportWrite.dateformat.string(from: selectedDate)
     }
     
     @EnvironmentObject var dailyReportVM : DailyReportVM
@@ -91,6 +91,9 @@ struct DailyReportCheck : View {
                   )
                       .datePickerStyle(WheelDatePickerStyle()) // 피커스타일 wheel
                       .labelsHidden() //text 숨김
+                      .onChange(of: selectedDate) { _ in
+                          dailyReportVM.getDailyReport(report_date: "\(formattedReportDate)", work: 60, team_id: 0)
+                      }
               }
               
               ScrollView(.horizontal) {
@@ -118,7 +121,7 @@ struct DailyReportCheck : View {
               Section(header: headerView()){
                 List(performanceList) { aList in
                       HStack(spacing: 0){
-                          Text("\(aList.userName)(\(aList.userSerial))")
+                          Text("\(aList.userName)(\(aList.userNo))")
                               .font(.system(size: 15))
                               .bold()
                           VStack(alignment: .trailing){
@@ -131,15 +134,15 @@ struct DailyReportCheck : View {
                               .padding(.bottom,1) //전일미결과 배당종결미결라인 사이 패딩
                               HStack(spacing:0){
                                   Text("\(aList.todayAllocation)") //당일배당
-                                      .font(.system(size: 13))
+                                      .font(.system(size: 15))
                                       .frame(minWidth: 50, alignment: .trailing)
                                   Spacer().frame(width: 10)
                                   Text("\(aList.todayEnding)") //당일종결
-                                      .font(.system(size: 13))
+                                      .font(.system(size: 15))
                                       .frame(minWidth: 68, alignment: .trailing)
                                       .foregroundColor(Color.blue)
                                   Text("\(aList.todayNotApproval)")
-                                      .font(.system(size: 13))
+                                      .font(.system(size: 15))
                                       .frame(minWidth: 78, alignment: .trailing)
                                       .foregroundColor(Color.red)
                               }

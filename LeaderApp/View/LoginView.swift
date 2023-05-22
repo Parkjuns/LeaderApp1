@@ -12,7 +12,6 @@ struct LoginView : View {
     
     @StateObject var userVM : UserVM = UserVM()
     
-    
     @State fileprivate var shouldShowAlert : Bool = false //알림
     @State fileprivate var isLoggedin : Bool = false
     

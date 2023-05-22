@@ -28,7 +28,7 @@ struct DailyReportStaticsContent: View {
                 if tabIndex == 0 {
                     DailyReportStatics()
                 } else if tabIndex == 1 {
-                    Text("일일배당 및 미결(세부내역)")
+                    DailyReportStaticsDetail()
                 } else if tabIndex == 2 {
                     DailyReportStaticsClosing()
                 }

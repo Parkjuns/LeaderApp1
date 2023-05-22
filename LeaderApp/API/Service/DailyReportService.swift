@@ -36,8 +36,6 @@ enum DailyReportService {
     //팀별 일일배당확인
     static func getDailyReport(report_date:String, work:Int, team_id:Int) -> AnyPublisher<(DailyReportCheckResponse), AFError> {
 
-        print("getDailyReport 시작")
-        
         //토큰 조회
         let storedTokenData = UserDefaultsManager.shared.getTokens() //저장된 토큰값을 가져온다
         let credential = OAuthCredential(token: storedTokenData.Authorization)
@@ -47,6 +45,26 @@ enum DailyReportService {
         
         return ApiClient.shared.session
             .request(DailyReportRouter.getDailyReport(report_date: report_date, work: work, team_id: team_id), interceptor: authInterceptor)
+            .publishDecodable(type: DailyReportCheckResponse.self)
+            .value()
+            .map { response in
+                print("받은값 :: \(response)")
+                return response
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    //일일배당 및 미결
+    static func getDailyReportStaticContent(report_date:String, work:Int, part:Int) -> AnyPublisher<(DailyReportCheckResponse), AFError> {
+
+        //토큰 조회
+        let storedTokenData = UserDefaultsManager.shared.getTokens() //저장된 토큰값을 가져온다
+        let credential = OAuthCredential(token: storedTokenData.Authorization)
+        let authenticator = OAuthAuthenticator()
+        let authInterceptor = AuthenticationInterceptor(authenticator: authenticator, credential: credential)
+        
+        return ApiClient.shared.session
+            .request(DailyReportRouter.getDailyReportStaticContent(report_date: report_date, work: work, part: part), interceptor: authInterceptor)
             .publishDecodable(type: DailyReportCheckResponse.self)
             .value()
             .map { response in

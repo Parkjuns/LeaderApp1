@@ -50,16 +50,25 @@ struct MyPage : View {
                     ScrollView(.horizontal) {
                        LazyHStack {
 //                           ForEach(0...5, id: \.self) { i in
-                           Button(action: { self.isPresented.toggle() }) {
-                              VStack {
-                                 Image(systemName: "chart.bar.fill")
-                                     .frame(width: 100, height: 50)
-                                 Text("실적입력")
-                                     .foregroundColor(.secondary)
-                                     .padding(.all, 10)
-                             }
-                           }.sheet(isPresented: $isPresented) {
-                               DailyReport(dailyReportVM: DailyReportVM())
+//                           Button(action: { self.isPresented.toggle() }) {
+//                              VStack {
+//                                 Image(systemName: "chart.bar.fill")
+//                                     .frame(width: 100, height: 50)
+//                                 Text("개인실적")
+//                                     .foregroundColor(.secondary)
+//                                     .padding(.all, 10)
+//                             }
+//                           }.sheet(isPresented: $isPresented) {
+//                               DailyReport(dailyReportVM: DailyReportVM())
+//                           }
+                           NavigationLink(destination: DailyReport().environmentObject(dailyReportVM)) {
+                               VStack {
+                                   Image(systemName: "doc.fill")
+                                       .frame(width: 100, height: 50)
+                                   Text("개인실적")
+                                       .foregroundColor(.secondary)
+                                       .padding(.all, 10)
+                               }
                            }
                            
                            NavigationLink(destination: DailyReportCheck().environmentObject(dailyReportVM)) {
@@ -72,7 +81,7 @@ struct MyPage : View {
                                }
                            }
                            
-                           NavigationLink(destination: DailyReportStaticsContent()) {
+                           NavigationLink(destination: DailyReportStaticsContent().environmentObject(dailyReportVM)) {
                                VStack {
                                    Image(systemName: "doc.fill")
                                        .frame(width: 100, height: 50)

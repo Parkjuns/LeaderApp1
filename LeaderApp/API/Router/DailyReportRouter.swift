@@ -12,6 +12,7 @@ enum DailyReportRouter: URLRequestConvertible {
     
     case putDailyReport(report_date:String, prev_day_not_approval:Int, today_allocation:Int, today_ending:Int, today_not_approval:Int)
     case getDailyReport(report_date:String, work:Int, team_id:Int)
+    case getDailyReportStaticContent(report_date:String, work:Int, part:Int)
     
     var baseURL: URL {
         return URL(string: ApiClient.BASE_URL)!
@@ -23,6 +24,8 @@ enum DailyReportRouter: URLRequestConvertible {
             return "daily_report/performance"
         case .getDailyReport(let report_date, let work, let team_id):
             return "daily_report/report_date/\(report_date)/work/\(work)/team/\(team_id)"
+        case .getDailyReportStaticContent(let report_date, let work, let part):
+            return "daily_report/statistics/report_date/\(report_date)/work/\(work)/part/\(part)"
         }
     }
     
@@ -31,6 +34,8 @@ enum DailyReportRouter: URLRequestConvertible {
         case .putDailyReport :
             return .put
         case .getDailyReport :
+            return .get
+        case .getDailyReportStaticContent :
             return .get
         }
     }

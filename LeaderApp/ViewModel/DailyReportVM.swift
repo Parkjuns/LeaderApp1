@@ -23,19 +23,15 @@ class DailyReportVM: ObservableObject {
     @Published var totalTodayEnding : Int = 0
     @Published var totalTodayNotApproval : Int = 0
     
-//    @Published var testData : TestData = TestData()
-    
     
     //일일보고 > 실적입력
     func putDailyReport(report_date: String, prev_day_not_approval: Int, today_allocation: Int, today_ending: Int, today_not_approval: Int){
-        print("DailyReportVM 시작")
-        
+        print("putDailyReport() start")
         DailyReportService.putDailyReport(report_date: report_date,
                                           prev_day_not_approval: prev_day_not_approval,
                                           today_allocation: today_allocation,
                                           today_ending: today_ending,
                                           today_not_approval: today_not_approval)
-
         .sink { (completion: Subscribers.Completion<AFError>) in
             print("DailyReportVM completion: \(completion)")
         } receiveValue: { MessageData in
@@ -48,7 +44,7 @@ class DailyReportVM: ObservableObject {
     
     //기타 > 팀별 일일배당 확인
     func getDailyReport(report_date: String, work: Int, team_id: Int){
-        print("DailyReportVM 시작")
+        print("getDailyReport() start")
         DailyReportService.getDailyReport(report_date: report_date, work: work, team_id: team_id)
             .sink { (completion: Subscribers.Completion<AFError>) in
                 print("DailyReportVM completion: \(completion)")
@@ -63,4 +59,19 @@ class DailyReportVM: ObservableObject {
             }.store(in: &subscription)
     }
     
+    //기타 > 일일배당 및 미결
+    func getDailyReportStaticContent(report_date: String, work: Int, part: Int){
+        print("getDailyReportStaticContent() start")
+        DailyReportService.getDailyReportStaticContent(report_date: report_date, work: work, part: part)
+            .sink { (completion: Subscribers.Completion<AFError>) in
+                print("DailyReportVM completion: \(completion)")
+            } receiveValue: { receivedData in
+                self.performanceList = receivedData.performanceList
+                self.teamMemberCnt = receivedData.teamMemberCnt
+                self.totalPrevDayNotApproval = receivedData.totalPrevDayNotApproval
+                self.totalTodayAllocation = receivedData.totalTodayAllocation
+                self.totalTodayEnding = receivedData.totalTodayEnding
+                self.totalTodayNotApproval = receivedData.totalPrevDayNotApproval
+            }.store(in: &subscription)
+    }
 }
